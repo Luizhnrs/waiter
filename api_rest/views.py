@@ -20,6 +20,19 @@ def get_users(request):
 
     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
+@api_view(['GET'])
+def get_by_nick(request, nick):
+
+    try:
+        user = User.objects.get(pk=nick)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = UserSerializer(user)
+
+        return Response(serializer.data)
+
 
 
 
