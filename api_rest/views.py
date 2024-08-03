@@ -10,13 +10,37 @@ from .serializers import UserSerializer
 
 import json
 
-def databaseManagementInDjango():
-    data = User.objects.get(pk='Luiz')                  #OBJECT
+@api_view(['GET'])
+def get_users(request):
+    if request.method == 'GET':
+        users = User.objects.all()
 
-    data = User.objects.filter(user_age='23')           #QUERYSET
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
 
-    data = User.objects.exclude(user_age='25')          #QUERYSET
+    return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    data.save()
 
-    data.delete()
+
+
+
+
+
+
+
+
+
+
+
+
+
+#def databaseManagementInDjango():
+#   data = User.objects.get(pk='Luiz')                  #OBJECT
+#
+#   data = User.objects.filter(user_age='23')           #QUERYSET
+
+#    data = User.objects.exclude(user_age='25')          #QUERYSET
+
+#   data.save()
+
+#  data.delete()
